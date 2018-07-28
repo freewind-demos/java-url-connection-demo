@@ -3,6 +3,7 @@ package demo;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
@@ -14,12 +15,13 @@ public class Hello {
     public static void main(String[] args) throws Exception {
         URL url = new URL("https://github.com");
         URLConnection connection = url.openConnection();
+        connection.setConnectTimeout(5 * 1000);
         connection.connect();
 
         printHeaders(connection);
         printContent(connection);
-
     }
+
     private static void printContent(URLConnection connection) throws IOException {
         String content = IOUtils.toString(connection.getInputStream(), Charset.defaultCharset());
         System.out.println(content);
